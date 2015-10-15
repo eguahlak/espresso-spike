@@ -59,7 +59,7 @@ class Work extends Branch {
     return end;
     }
   
-  void processDyadics(String... values) {
+  void processInfixDyadics(String... values) {
     Node node = root;
     do {
       if (node.branch.hasTokenValue(values)) {
@@ -70,9 +70,25 @@ class Work extends Branch {
       node = node.next;
       }
     while (node != root);
-    more.stream().forEach(work -> work.processDyadics(values));
+    more.stream().forEach(work -> work.processInfixDyadics(values));
     }
 
+  void processPrefixDyadics(String... values) {
+    Node node = root;
+    do {
+      if (node.branch.hasTokenValue(values)) {
+        Branch left = node.pruneNext();
+        Branch right = node.pruneNext();
+        node.branch = new Tree(this, node.branch.getToken(), left, right);
+        }
+      node = node.next;
+      }
+    while (node != root);
+    more.stream().forEach(work -> work.processInfixDyadics(values));
+    }
+
+  
+  
   int count() {
     int count = -1;
     Node node = root;
