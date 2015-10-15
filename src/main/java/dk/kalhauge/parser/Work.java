@@ -121,6 +121,7 @@ class Work extends Branch {
       node = node.next;
       }
     while (node != root);
+    visitor.finish(this);
     }
 
   @Override

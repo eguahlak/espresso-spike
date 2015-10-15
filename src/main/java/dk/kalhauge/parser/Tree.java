@@ -22,6 +22,7 @@ class Tree extends Branch {
   public void accept(Visitor visitor) {
     visitor.visit(this);
     for (Branch branch : branches) branch.accept(visitor);
+    visitor.finish(this);
     }
 
   @Override

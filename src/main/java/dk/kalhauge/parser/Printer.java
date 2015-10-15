@@ -56,5 +56,11 @@ class Printer implements Visitor {
       }
     plot(text, pos, tree.getDepth());
     }
+
+  @Override
+  public void finish(Work work) { }
+
+  @Override
+  public void finish(Tree tree) { }
   
   }

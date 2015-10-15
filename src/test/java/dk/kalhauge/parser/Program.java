@@ -40,6 +40,7 @@ public class Program {
             "if ( 3 + a ) * 7 > 8 { a = 56 ; y } else z"
     ).iterator());
     Printer.print(work);
+    compress(work);
     work.processInfixDyadics("*", "/");
     work.processInfixDyadics("+", "-");
     work.processInfixDyadics(">", "<", ">=", "<=", "==", "!=");
@@ -51,7 +52,14 @@ public class Program {
     Branch normalised = work.normalised();
     normalised.reposition(0);
     Printer.print(normalised);
+    compress(normalised);
   }
+  
+  private static void compress(Branch branch) {
+    Compressor compressor = new Compressor(); 
+    branch.accept(compressor);
+    compressor.print(System.out);
+    }
   
   public static void main(String[] args) {
 //    checkSimpleMinusPlus();

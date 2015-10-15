@@ -1,5 +1,5 @@
 package dk.kalhauge.parser;
 
-public interface Visible {
+interface Visible {
   void accept(Visitor visitor);
   }
