@@ -1,17 +1,17 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.util.CharacterStack;
+import dk.kalhauge.util.CharacterSource;
 import java.io.IOException;
 
 public class NumeralToken extends Token {
   private String value;
   private boolean discrete = true;
 
-  public static boolean understands(CharacterStack input) throws IOException {
+  public static boolean understands(CharacterSource input) throws IOException {
     return Character.isDigit(input.peek());
     }
   
-  public NumeralToken(CharacterStack input) throws IOException {
+  public NumeralToken(CharacterSource input) throws IOException {
     int ch = input.pop();
     value = Character.toString((char)ch);
     ch = input.pop();
@@ -65,13 +65,6 @@ public class NumeralToken extends Token {
   @Override
   public <T extends Token> boolean is(Class<T> type, String... values) {
     return type == NumeralToken.class && (values.length == 0 || value.equals(values[0]));
-    }
-
-  @Override
-  public String joinWith(TokenQueue tokens) {
-    if (tokens.isEmpty()) return value;
-    if (tokens.peek().is(NUMERAL)) return value+" "+tokens.joined();
-    return value+tokens.joined();
     }
 
   @Override

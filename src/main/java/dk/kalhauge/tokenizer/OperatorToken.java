@@ -1,6 +1,6 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.util.CharacterStack;
+import dk.kalhauge.util.CharacterSource;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -18,7 +18,7 @@ public class OperatorToken extends Token {
     "=", "%", ".", ",", ";", "...", "@",
     "+", "-", "*", "/", "^", "!", "&", "|", "&&", "||", "<", "<=", "=", "==", ">=", ">",
     "<<", ">>", "~",
-    "+=", "-=", "*=", "/=", "^=", "<<=", ">>=", "~="
+    "++", "--", "+=", "-=", "*=", "/=", "^=", "<<=", ">>=", "~="
     };
   private String name;
   
@@ -38,11 +38,11 @@ public class OperatorToken extends Token {
     return combinations.contains(name);
     }
   
-  public static boolean understands(CharacterStack input) throws IOException {
+  public static boolean understands(CharacterSource input) throws IOException {
     return isPart(input.peek());
     }
 
-  public OperatorToken(CharacterStack input) throws IOException {
+  public OperatorToken(CharacterSource input) throws IOException {
     int ch = input.pop();
     name = Character.toString((char)ch);
     ch = input.pop();
@@ -70,11 +70,6 @@ public class OperatorToken extends Token {
   @Override
   public boolean is(Token other) {
     return other.is(OperatorToken.class, name);
-    }
-
-  @Override
-  public String joinWith(TokenQueue tokens) {
-    return name+tokens.joined();
     }
 
   @Override

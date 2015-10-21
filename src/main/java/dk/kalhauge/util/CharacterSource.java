@@ -6,15 +6,15 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
-public class CharacterStack {
+public class CharacterSource {
   private final Reader in;
   private CharacterNode first = null;
   
-  public CharacterStack(InputStream stream) {
+  public CharacterSource(InputStream stream) {
     in = new InputStreamReader(stream);
     }
   
-  public CharacterStack(String string) {
+  public CharacterSource(String string) {
     in = new StringReader(string);
     }
   

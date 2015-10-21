@@ -1,6 +1,6 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.util.CharacterStack;
+import dk.kalhauge.util.CharacterSource;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,17 +12,17 @@ public class EndToken extends Token {
     ends.add((int)')');
     ends.add((int)']');
     ends.add((int)'}');
+    ends.add((int)'$');
     }
+  private final int end;
 
-  public static boolean understands(CharacterStack input) throws IOException {
+  public static boolean understands(CharacterSource input) throws IOException {
     return ends.contains(input.peek());
     }
 
-  public EndToken() { }
-  
-  public EndToken(CharacterStack input) throws IOException {
-    if (input.isEmpty()) return;
-    input.pop();
+  public EndToken(CharacterSource input) throws IOException {
+    if (input.isEmpty()) end = (int)'$';
+    else end = input.pop();
     }
   
   @Override
@@ -33,11 +33,6 @@ public class EndToken extends Token {
   @Override
   public boolean is(Token other) {
     return other.getClass() == EndToken.class;
-    }
-
-  @Override
-  public String joinWith(TokenQueue tokens) {
-    return "";
     }
 
   @Override

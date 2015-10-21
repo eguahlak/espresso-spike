@@ -1,20 +1,20 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.util.CharacterStack;
+import dk.kalhauge.util.CharacterSource;
 import java.io.IOException;
 
 public class WhitespaceToken extends Token {
   private String value;
   
-  public static boolean understands(CharacterStack input) throws IOException {
+  public static boolean understands(CharacterSource input) throws IOException {
     return Character.isWhitespace(input.peek());
     }
 
-  public static void trim(CharacterStack input) throws IOException {
+  public static void trim(CharacterSource input) throws IOException {
     while (Character.isWhitespace(input.peek())) input.pop();
     }
   
-  public WhitespaceToken(CharacterStack input) throws IOException {
+  public WhitespaceToken(CharacterSource input) throws IOException {
     int ch = input.pop();
     value = Character.toString((char)ch);
     ch = input.pop();
@@ -38,11 +38,6 @@ public class WhitespaceToken extends Token {
   @Override
   public <T extends Token> boolean is(Class<T> type, String... values) {
     return type == WhitespaceToken.class;
-    }
-
-  @Override
-  public String joinWith(TokenQueue tokens) {
-    return tokens.joined();
     }
 
   @Override

@@ -1,6 +1,6 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.util.CharacterStack;
+import dk.kalhauge.util.CharacterSource;
 import java.io.IOException;
 
 public class StringToken extends Token {
@@ -11,11 +11,11 @@ public class StringToken extends Token {
     return ch == '\'' || ch == '"';
     }
   
-  public static boolean understands(CharacterStack input) throws IOException {
+  public static boolean understands(CharacterSource input) throws IOException {
     return isQuote(input.peek());
     }
 
-  public StringToken(CharacterStack input) throws IOException {
+  public StringToken(CharacterSource input) throws IOException {
     quote = input.pop();
     int ch = input.pop();
     while (ch != quote) {
@@ -39,11 +39,6 @@ public class StringToken extends Token {
   @Override
   public <T extends Token> boolean is(Class<T> type, String... values) {
     return type == StringToken.class && (values.length == 0 || value.equals(values[0]));
-    }
-
-  @Override
-  public String joinWith(TokenQueue tokens) {
-    throw new UnsupportedOperationException("Joining strings does not make sense yet");
     }
 
   @Override

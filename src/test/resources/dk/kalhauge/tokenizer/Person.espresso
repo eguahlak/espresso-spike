@@ -1,0 +1,11 @@
+class Person {
+  state child, adult.married, adult.single, dead;
+  String name;
+  Integer age;
+  Person@spouse spouse;
+
+  when adult void haveBirthday() {
+    age = age + 1;
+    }
+  
+  }
