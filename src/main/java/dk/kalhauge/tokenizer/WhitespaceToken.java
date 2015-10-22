@@ -1,28 +1,29 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.util.CharacterSource;
+import dk.kalhauge.source.Source;
 import java.io.IOException;
 
 public class WhitespaceToken extends Token {
   private String value;
   
-  public static boolean understands(CharacterSource input) throws IOException {
-    return Character.isWhitespace(input.peek());
+  public static boolean understands(Source source) throws IOException {
+    return Character.isWhitespace(source.peek());
     }
 
-  public static void trim(CharacterSource input) throws IOException {
-    while (Character.isWhitespace(input.peek())) input.pop();
+  public static void trim(Source source) throws IOException {
+    while (Character.isWhitespace(source.peek())) source.pop();
     }
   
-  public WhitespaceToken(CharacterSource input) throws IOException {
-    int ch = input.pop();
+  public WhitespaceToken(Source source) throws IOException {
+    super(source);
+    int ch = source.pop();
     value = Character.toString((char)ch);
-    ch = input.pop();
+    ch = source.pop();
     while (Character.isWhitespace(ch)) {
       value += Character.toString((char)ch);
-      ch = input.pop();
+      ch = source.pop();
       }
-    input.push(ch);
+    source.push(ch);
     }
   
   public String getValue() { return value; }
@@ -43,6 +44,11 @@ public class WhitespaceToken extends Token {
   @Override
   public boolean is(String... values) {
     return in(value, values);
+    }
+
+  @Override
+  public String getText() {
+    return "";
     }
   
   }

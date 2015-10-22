@@ -1,7 +1,11 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.util.CharacterSource;
+import dk.kalhauge.source.Position;
+import dk.kalhauge.source.Source;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class Token {
   public static boolean excludeWhitespace = true;
@@ -11,6 +15,34 @@ public abstract class Token {
   public static final Class<? extends StringToken> STRING = StringToken.class;
   public static final Class<? extends StartToken> START = StartToken.class;
   public static final Class<? extends EndToken> END = EndToken.class;
+  
+//  private final Position sourcePosition;
+  private int position;
+  
+  Token(Source source) {
+//    this.sourcePosition = null;
+    this.position = 0;
+    }
+
+  @Override
+  public String toString() {
+    return getText()+" ["+position+"]";
+    }
+
+  public abstract String getText();
+  
+  public int getPosition() {
+    return position;
+    }
+
+  public int setPosition(int value) {
+    position = value;
+    return value + getText().length();
+    }
+  
+//  public Position getSourcePosition() {
+//    return sourcePosition;
+//    }
   
   public static boolean in(String pattern, String[] values) {
     //TODO: consider changing name of method
@@ -32,18 +64,55 @@ public abstract class Token {
     }
   
   public boolean isWhitespace() { return false; }
-  
-  static Token read(CharacterSource input) throws IOException {
-    if (excludeWhitespace) WhitespaceToken.trim(input);
-    else if (WhitespaceToken.understands(input)) return new WhitespaceToken(input);
-    if (EndToken.understands(input)) return new EndToken(input);
-    if (IdentifierToken.understands(input)) return new IdentifierToken(input);
-    if (NumeralToken.understands(input)) return new NumeralToken(input);
-    if (OperatorToken.understands(input)) return new OperatorToken(input);
-    if (StringToken.understands(input)) return new StringToken(input);
-    throw new IncomprehensibleTokenException("Cannot understand character '"+(char)input.peek()+"' #"+input.peek());
+    
+  static Token read(Source source) throws IOException {
+    if (excludeWhitespace) WhitespaceToken.trim(source);
+    else if (WhitespaceToken.understands(source)) return new WhitespaceToken(source);
+    if (StartToken.understands(source)) return new StartToken(source);
+    if (EndToken.understands(source)) return new EndToken(source);
+    if (IdentifierToken.understands(source)) return new IdentifierToken(source);
+    if (NumeralToken.understands(source)) return new NumeralToken(source);
+    if (OperatorToken.understands(source)) return new OperatorToken(source);
+    if (StringToken.understands(source)) return new StringToken(source);
+    throw new UnknownTokenException("Cannot understand character '"+(char)source.peek()+"' #"+source.peek());
     }
 
+  public static Iterator<Token> iterate(Source source) {
+    return new SourceIterator(source);
+    }
+  
+  private static class SourceIterator implements Iterator<Token> {
+    Source source;
+    int position = 0;
 
+    public SourceIterator(Source source) {
+      this.source = source;
+      }
+
+    @Override
+    public boolean hasNext() {
+      try {
+        return !source.isEmpty();
+        } 
+      catch (IOException ex) {
+        Logger.getLogger(Token.class.getName()).log(Level.SEVERE, null, ex);
+        return false;
+        }
+      }
+
+    @Override
+    public Token next() {
+      try {
+        Token token = Token.read(source);
+        position = token.setPosition(position) + 1;
+        return token;
+        } 
+      catch (IOException ex) {
+        Logger.getLogger(Token.class.getName()).log(Level.SEVERE, null, ex);
+        throw new RuntimeException("Ups!");
+        }
+      }
+    
+    }
   
   }

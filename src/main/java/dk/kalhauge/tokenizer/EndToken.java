@@ -1,6 +1,6 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.util.CharacterSource;
+import dk.kalhauge.source.Source;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,13 +16,14 @@ public class EndToken extends Token {
     }
   private final int end;
 
-  public static boolean understands(CharacterSource input) throws IOException {
+  public static boolean understands(Source input) throws IOException {
     return ends.contains(input.peek());
     }
 
-  public EndToken(CharacterSource input) throws IOException {
-    if (input.isEmpty()) end = (int)'$';
-    else end = input.pop();
+  public EndToken(Source source) throws IOException {
+    super(source);
+    if (source.isEmpty()) end = (int)'$';
+    else end = source.pop();
     }
   
   @Override
@@ -37,8 +38,12 @@ public class EndToken extends Token {
 
   @Override
   public boolean is(String... values) {
-    // TODO: sanity check
-    return true;
+    return values.length == 0;
+    }
+
+  @Override
+  public String getText() {
+    return String.valueOf((char)end);
     }
   
   }

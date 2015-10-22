@@ -1,6 +1,6 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.util.CharacterSource;
+import dk.kalhauge.source.Source;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -38,27 +38,23 @@ public class OperatorToken extends Token {
     return combinations.contains(name);
     }
   
-  public static boolean understands(CharacterSource input) throws IOException {
+  public static boolean understands(Source input) throws IOException {
     return isPart(input.peek());
     }
 
-  public OperatorToken(CharacterSource input) throws IOException {
-    int ch = input.pop();
+  public OperatorToken(Source source) throws IOException {
+    super(source);
+    int ch = source.pop();
     name = Character.toString((char)ch);
-    ch = input.pop();
+    ch = source.pop();
     while (isCombination(name+(char)ch)) {
       name += (char)ch;
-      ch = input.pop();
+      ch = source.pop();
       }
-    input.push(ch);
+    source.push(ch);
     }
 
   public String getName() {
-    return name;
-    }
-
-  @Override
-  public String toString() {
     return name;
     }
 
@@ -75,6 +71,11 @@ public class OperatorToken extends Token {
   @Override
   public boolean is(String... values) {
     return in(name, values);
+    }
+
+  @Override
+  public String getText() {
+    return name;
     }
   
   }

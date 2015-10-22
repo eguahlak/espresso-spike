@@ -1,4 +1,4 @@
-package dk.kalhauge.util;
+package dk.kalhauge.source;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,15 +6,15 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
-public class CharacterSource {
+public class Source {
   private final Reader in;
   private CharacterNode first = null;
   
-  public CharacterSource(InputStream stream) {
+  public Source(InputStream stream) {
     in = new InputStreamReader(stream);
     }
   
-  public CharacterSource(String string) {
+  public Source(String string) {
     in = new StringReader(string);
     }
   
@@ -39,6 +39,7 @@ public class CharacterSource {
   private class CharacterNode {
     private int value;
     private CharacterNode next;
+    
     
     public CharacterNode(int value, CharacterNode next) {
       this.value = value;

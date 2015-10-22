@@ -1,36 +1,28 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.util.CharacterSource;
+import dk.kalhauge.source.Source;
 import java.io.IOException;
 
 public class IdentifierToken extends Token implements Comparable<IdentifierToken> {
   private String value;
   
-  public static boolean understands(CharacterSource input) throws IOException {
+  public static boolean understands(Source input) throws IOException {
     return Character.isJavaIdentifierStart(input.peek());
     }
   
-  public IdentifierToken(CharacterSource input) throws IOException {
-    int ch = input.pop();
+  public IdentifierToken(Source source) throws IOException {
+    super(source);
+    int ch = source.pop();
     value = Character.toString((char)ch);
-    ch = input.pop();
+    ch = source.pop();
     while (Character.isJavaIdentifierPart(ch)) {
       value += Character.toString((char)ch);
-      ch = input.pop();
+      ch = source.pop();
       }
-    input.push(ch);
+    source.push(ch);
     }
 
-  public IdentifierToken(String name) {
-    this.value = name;
-    }
-  
   public String getValue() {
-    return value;
-    }
-
-  @Override
-  public String toString() {
     return value;
     }
 
@@ -59,6 +51,11 @@ public class IdentifierToken extends Token implements Comparable<IdentifierToken
   @Override
   public boolean is(String... values) {
     return in(value, values);
+    }
+
+  @Override
+  public String getText() {
+    return value;
     }
   
   }

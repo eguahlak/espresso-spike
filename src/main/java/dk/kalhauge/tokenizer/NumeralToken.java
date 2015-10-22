@@ -1,48 +1,49 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.util.CharacterSource;
+import dk.kalhauge.source.Source;
 import java.io.IOException;
 
 public class NumeralToken extends Token {
   private String value;
   private boolean discrete = true;
 
-  public static boolean understands(CharacterSource input) throws IOException {
+  public static boolean understands(Source input) throws IOException {
     return Character.isDigit(input.peek());
     }
   
-  public NumeralToken(CharacterSource input) throws IOException {
-    int ch = input.pop();
+  public NumeralToken(Source source) throws IOException {
+    super(source);
+    int ch = source.pop();
     value = Character.toString((char)ch);
-    ch = input.pop();
+    ch = source.pop();
     while (Character.isDigit(ch)) {
       value += Character.toString((char)ch);
-      ch = input.pop();
+      ch = source.pop();
       }
     if (ch == '.') {
       discrete = false;
       value += ".";
-      ch = input.pop();
+      ch = source.pop();
       while (Character.isDigit(ch)) {
         value += Character.toString((char)ch);
-        ch = input.pop();
+        ch = source.pop();
         }
       }
     if (ch == 'e' || ch == 'E') {
       discrete = false;
       value += "E";
-      ch = input.pop();
+      ch = source.pop();
       if (ch == '-') {
         value += "-";
-        ch = input.pop();
+        ch = source.pop();
         }
-      else if (ch == '+') ch = input.pop();
+      else if (ch == '+') ch = source.pop();
       while (Character.isDigit(ch)) {
         value += Character.toString((char)ch);
-        ch = input.pop();
+        ch = source.pop();
         }
       }
-    input.push(ch);
+    source.push(ch);
     }
 
   public String getValue() {
@@ -71,6 +72,11 @@ public class NumeralToken extends Token {
   public boolean is(String... values) {
     // See StringToken
     return false;
+    }
+
+  @Override
+  public String getText() {
+    return value;
     }
   
   }

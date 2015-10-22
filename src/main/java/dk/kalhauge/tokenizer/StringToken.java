@@ -1,6 +1,6 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.util.CharacterSource;
+import dk.kalhauge.source.Source;
 import java.io.IOException;
 
 public class StringToken extends Token {
@@ -11,30 +11,26 @@ public class StringToken extends Token {
     return ch == '\'' || ch == '"';
     }
   
-  public static boolean understands(CharacterSource input) throws IOException {
+  public static boolean understands(Source input) throws IOException {
     return isQuote(input.peek());
     }
 
-  public StringToken(CharacterSource input) throws IOException {
-    quote = input.pop();
-    int ch = input.pop();
+  public StringToken(Source source) throws IOException {
+    super(source);
+    quote = source.pop();
+    int ch = source.pop();
     while (ch != quote) {
       if (ch == '\\') {
         throw new RuntimeException("Escape sequence found in '"+value+"', escape sequences are not implemented");
         }
       value += (char)ch;
-      ch = input.pop();
+      ch = source.pop();
       }
     }
 
   public String getValue() { return value; }
 
   public String getQuote() { return ""+(char)quote; }
-
-  @Override
-  public String toString() {
-    return ""+(char)quote+value+(char)quote;
-    }
 
   @Override
   public <T extends Token> boolean is(Class<T> type, String... values) {
@@ -45,6 +41,11 @@ public class StringToken extends Token {
   public boolean is(String... values) {
     // matching literals does not make sense at this point
     return false;
+    }
+
+  @Override
+  public String getText() {
+    return ""+(char)quote+value+(char)quote;
     }
   
   }

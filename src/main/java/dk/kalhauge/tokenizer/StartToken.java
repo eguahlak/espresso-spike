@@ -1,6 +1,6 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.util.CharacterSource;
+import dk.kalhauge.source.Source;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,12 +19,13 @@ public class StartToken extends Token {
     return ""+(char)start+(char)end;
     }
   
-  public static boolean understands(CharacterSource input) throws IOException {
+  public static boolean understands(Source input) throws IOException {
     return brackets.containsKey(input.peek());
     }
 
-  public StartToken(CharacterSource input) throws IOException {
-    start = input.pop();
+  public StartToken(Source source) throws IOException {
+    super(source);
+    start = source.pop();
     end = brackets.get(start);
     }
 
@@ -38,13 +39,13 @@ public class StartToken extends Token {
   public String getEnd() { return ""+(char)end; }
 
   @Override
-  public String toString() {
-    return ""+getStart()+getEnd();
+  public boolean is(String... values) {
+    return in(getPattern(), values);
     }
 
   @Override
-  public boolean is(String... values) {
-    return in(getPattern(), values);
+  public String getText() {
+    return String.valueOf((char)start);
     }
   
   }
