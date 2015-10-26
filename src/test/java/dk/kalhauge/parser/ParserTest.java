@@ -38,11 +38,11 @@ public class ParserTest {
     assertThat(Compressor.compress(tree), is("else(if(>(*(+(3 a)7)8);(=(a 56)y))z)"));
   }
 
-  private static Path<Token> pathOf(String text) {
+  private static Path<OldToken> pathOf(String text) {
     String[] values = (text + " $").split(" ");
-    Path<Token> path = null;
+    Path<OldToken> path = null;
     for (int i = values.length - 1; i >= 0; i--) {
-      Token token = new Token(values[i], i + 1);
+      OldToken token = new OldToken(values[i], i + 1);
       path = new Path<>(token, path);
       }
     return path;

@@ -1,12 +1,12 @@
 package dk.kalhauge.parser;
 
-class Token {
-  final static Token SOF = new Token("^", 0);
-  final static Token EOF = new Token("$", 0);
+class OldToken {
+  final static OldToken SOF = new OldToken("^", 0);
+  final static OldToken EOF = new OldToken("$", 0);
   private final String value;
   private int position;
 
-  public Token(String value, int position) {
+  public OldToken(String value, int position) {
     this.value = value;
     this.position = position;
     }

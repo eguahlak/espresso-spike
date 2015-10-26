@@ -2,9 +2,9 @@ package dk.kalhauge.parser;
 
 abstract class Branch implements Visible {
   private Branch parent;
-  private final Token token;
+  private final OldToken token;
 
-  public Branch(Branch parent, Token token) {
+  public Branch(Branch parent, OldToken token) {
     this.parent = parent;
     this.token = token;
     }
@@ -35,7 +35,7 @@ abstract class Branch implements Visible {
     parent = value;
     }
   
-  public Token getToken() {
+  public OldToken getToken() {
     return token;
     }
   

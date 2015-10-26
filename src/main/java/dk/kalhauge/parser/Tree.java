@@ -3,7 +3,7 @@ package dk.kalhauge.parser;
 class Tree extends Branch {
   private final Branch[] branches;
   
-  Tree(Branch parent, Token token, Branch... branches) {
+  Tree(Branch parent, OldToken token, Branch... branches) {
     super(parent, token);
     this.branches = branches;
     for (Branch branch : branches) branch.setParent(this);

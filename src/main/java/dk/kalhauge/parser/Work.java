@@ -6,19 +6,19 @@ import java.util.Iterator;
 import java.util.function.Predicate;
 
 class Work extends Branch { 
-  private Token end;
+  private OldToken end;
   private Node root;
   private Collection<Work> more = new ArrayList<>();
   
-  Work(Iterator<Token> tokens) {
-    this(null, Token.SOF, t -> t.hasValue("$"), tokens);
+  Work(Iterator<OldToken> tokens) {
+    this(null, OldToken.SOF, t -> t.hasValue("$"), tokens);
     }
   
-  Work(Branch parent, Token start, Predicate<Token> stop, Iterator<Token> tokens) {
+  Work(Branch parent, OldToken start, Predicate<OldToken> stop, Iterator<OldToken> tokens) {
     super(parent, start);
     root = new Node(new Tree(null, start));
     while (tokens.hasNext()) {
-      Token token = tokens.next();
+      OldToken token = tokens.next();
       if (stop.test(token)) {
         end = token;
         break;
@@ -51,11 +51,11 @@ class Work extends Branch {
     return new Node(branch, root);
     }
 
-  Token getStart() {
+  OldToken getStart() {
     return getToken();
     }
   
-  Token getEnd() {
+  OldToken getEnd() {
     return end;
     }
   

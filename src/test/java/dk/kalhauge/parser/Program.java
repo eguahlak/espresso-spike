@@ -4,11 +4,11 @@ import dk.kalhauge.util.Path;
 
 public class Program {
   
-  private static Path<Token> pathOf(String text) {
+  private static Path<OldToken> pathOf(String text) {
     String[] values = (text + " $").split(" ");
-    Path<Token> path = null;
+    Path<OldToken> path = null;
     for (int i = values.length - 1; i >= 0; i--) {
-      Token token = new Token(values[i], i + 1);
+      OldToken token = new OldToken(values[i], i + 1);
       path = new Path<>(token, path);
     }
     return path;
