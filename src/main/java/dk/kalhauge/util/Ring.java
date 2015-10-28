@@ -16,13 +16,26 @@ public class Ring<T> implements Iterable<T> {
         combine(other);
         }
     
+    public static <T> Ring<T> create(T end, T... items) {
+        Ring<T> ring = new Ring(end);
+        for (T item : items) new Ring(item, ring);
+        return ring;
+        }
+    
     public final void combine(Ring<T> other) {
-        Ring<T> otherNext = other.next;
+        Ring<T> otherPrevious = other.previous;
         Ring<T> thisPrevious = this.previous;
-        previous = other;
-        other.next = this;
-        thisPrevious.next = otherNext;
-        otherNext.previous = this;
+        otherPrevious.next = this;
+        this.previous = otherPrevious;
+        thisPrevious.next = other;
+        other.previous = thisPrevious;
+        }
+
+    @Override
+    public String toString() {
+        String text = String.valueOf(data);
+        for (T item : this) text += "-"+String.valueOf(item);
+        return text;
         }
 
     public T detach() {
@@ -43,6 +56,11 @@ public class Ring<T> implements Iterable<T> {
         return previous;
         }
 
+    /**
+     * Iterates through all items in the ring, exept the item referenced.
+     * 
+     * @return an iterator of items in the ring 
+     */
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
@@ -62,7 +80,5 @@ public class Ring<T> implements Iterable<T> {
         
             };
         }
-    
-    
     
     }
