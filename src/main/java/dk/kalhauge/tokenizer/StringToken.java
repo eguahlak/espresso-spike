@@ -4,7 +4,7 @@ import dk.kalhauge.source.Source;
 import java.io.IOException;
 
 public class StringToken extends Token {
-  private int quote;
+  private final int quote;
   private String value = "";
   
   private static boolean isQuote(int ch) {
