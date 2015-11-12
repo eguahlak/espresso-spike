@@ -78,5 +78,10 @@ public class NumeralToken extends Token {
   public String getText() {
     return value;
     }
+
+  @Override
+  public boolean isLanguage() {
+    return false;
+    }
   
   }

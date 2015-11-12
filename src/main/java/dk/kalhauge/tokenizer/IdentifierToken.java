@@ -2,10 +2,18 @@ package dk.kalhauge.tokenizer;
 
 import dk.kalhauge.source.Source;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class IdentifierToken extends Token implements Comparable<IdentifierToken> {
   private String value;
-  
+  private static Set<String> keywords = null;
+
+  private static final String[] identifierKeywords = {
+    "class", "state", "when", "if", "else", "while", "do", "for", "as", "is"
+    };
+
   public static boolean understands(Source input) throws IOException {
     return Character.isJavaIdentifierStart(input.peek());
     }
@@ -56,6 +64,15 @@ public class IdentifierToken extends Token implements Comparable<IdentifierToken
   @Override
   public String getText() {
     return value;
+    }
+
+  @Override
+  public boolean isLanguage() {
+    if (keywords == null) {
+      keywords = new HashSet<>();
+      keywords.addAll(Arrays.asList(identifierKeywords));
+      }
+    return keywords.contains(value);
     }
   
   }

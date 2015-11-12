@@ -1,6 +1,6 @@
 package dk.kalhauge.tokenizer;
 
-import dk.kalhauge.source.Position;
+// import dk.kalhauge.source.Position;
 import dk.kalhauge.source.Source;
 import java.io.IOException;
 import java.util.Iterator;
@@ -17,16 +17,17 @@ public abstract class Token {
   public static final Class<? extends EndToken> END = EndToken.class;
   
 //  private final Position sourcePosition;
-  private int position;
+  private int position = 0;
   
   Token(Source source) {
-//    this.sourcePosition = null;
-    this.position = 0;
+//  TODO: refactor
     }
+  
+  Token() {}
 
   @Override
   public String toString() {
-    return getText()+" ["+position+"]";
+    return (isLanguage() ? "£" : "")+getText()+"["+position+"]";
     }
 
   public abstract String getText();
@@ -65,6 +66,8 @@ public abstract class Token {
   
   public boolean isWhitespace() { return false; }
     
+  public abstract boolean isLanguage();
+  
   static Token read(Source source) throws IOException {
     if (excludeWhitespace) WhitespaceToken.trim(source);
     else if (WhitespaceToken.understands(source)) return new WhitespaceToken(source);

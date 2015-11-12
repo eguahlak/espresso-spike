@@ -45,5 +45,10 @@ public class EndToken extends Token {
   public String getText() {
     return String.valueOf((char)end);
     }
+
+  @Override
+  public boolean isLanguage() {
+    return true;
+    }
   
   }

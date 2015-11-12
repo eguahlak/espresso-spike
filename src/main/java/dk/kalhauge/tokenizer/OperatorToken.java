@@ -77,5 +77,10 @@ public class OperatorToken extends Token {
   public String getText() {
     return name;
     }
+
+  @Override
+  public boolean isLanguage() {
+    return true;
+    }
   
   }

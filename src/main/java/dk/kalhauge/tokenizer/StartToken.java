@@ -11,6 +11,7 @@ public class StartToken extends Token {
     brackets.put((int)'(', (int)')');
     brackets.put((int)'[', (int)']');
     brackets.put((int)'{', (int)'}');
+    brackets.put((int)'^', (int)'$');
     }
   private final int start;
   private final int end;
@@ -23,6 +24,11 @@ public class StartToken extends Token {
     return brackets.containsKey(input.peek());
     }
 
+  public StartToken() {
+    start = '^';
+    end = brackets.get(start);
+    }
+  
   public StartToken(Source source) throws IOException {
     super(source);
     start = source.pop();
@@ -46,6 +52,11 @@ public class StartToken extends Token {
   @Override
   public String getText() {
     return String.valueOf((char)start);
+    }
+
+  @Override
+  public boolean isLanguage() {
+    return true;
     }
   
   }

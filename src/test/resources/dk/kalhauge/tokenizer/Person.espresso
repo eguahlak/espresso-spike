@@ -2,7 +2,12 @@ class Person {
   state child, adult.married, adult.single, dead;
   String name;
   Integer age;
-  Person@spouse spouse;
+  married Person@spouse spouse;
+
+  Integer calc(positive Integer a, Integer b) {
+    Integer c = x * -y;
+    return a*(b - 2) + x;
+    }
 
   when adult void haveBirthday() {
     age = age + 1;

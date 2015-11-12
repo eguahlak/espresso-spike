@@ -47,5 +47,10 @@ public class StringToken extends Token {
   public String getText() {
     return ""+(char)quote+value+(char)quote;
     }
+
+  @Override
+  public boolean isLanguage() {
+    return false;
+    }
   
   }

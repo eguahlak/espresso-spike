@@ -1,37 +1,45 @@
 package dk.kalhauge.grinder;
 
 import dk.kalhauge.tokenizer.Token;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 class Tree implements Branch {
-  private Token token;
-  private Branch parent;
-  private final Branch[] branches;
+  private final Token token;
+  private List<Branch> branches;
 
-    Tree(Branch parent, Token token, Branch... branches) {
-    this.parent = parent;
+  Tree(Token token, Branch... branches) {
     this.token = token;
-    this.branches = branches;
-    for (Branch branch : branches) branch.setParent(this);
+    add(branches);
+    }
+  
+  public final void add(Branch... branches) {
+    for (Branch branch : branches) {
+      if (this.branches == null) this.branches = new ArrayList<>();
+      this.branches.add(branch);
+      }
     }
 
-
-  @Override public Branch getParent() { return parent; }
-
-  @Override public void setParent(Branch value) { parent = value; }
-
+  @Override
+  public String toString() {
+    return "T("+token+")";
+    }
+    
   @Override public Token getToken() { return token; }
 
-  @Override
-  public Branch normalised() {
-    throw new UnsupportedOperationException("Tree.normalised(...) Not supported yet.");
+  public List<Branch> getBranches() {
+    if (branches == null) return Collections.EMPTY_LIST;
+    return branches;
     }
 
   @Override
-  public int getDepth() { 
-    if (parent == null) return 0;
-    return parent.getDepth() + 1;
+  public String getText() {
+    return token.getText();
     }
-
-  @Override public int getPosition() { return token.getPosition(); }
+  
+  public boolean isLeaf() {
+    return branches == null || branches.isEmpty();
+    }
 
   }

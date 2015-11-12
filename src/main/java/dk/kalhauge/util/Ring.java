@@ -3,7 +3,7 @@ package dk.kalhauge.util;
 import java.util.Iterator;
 
 public class Ring<T> implements Iterable<T> {
-    private final T data;
+    private T data;
     private Ring<T> previous = this;
     private Ring<T> next = this;
 
@@ -31,6 +31,10 @@ public class Ring<T> implements Iterable<T> {
         other.previous = thisPrevious;
         }
 
+    public void add(T data) {
+      new Ring(data, this);
+      }
+    
     @Override
     public String toString() {
         String text = String.valueOf(data);
@@ -44,10 +48,10 @@ public class Ring<T> implements Iterable<T> {
         return data;
         }
     
-    public T getData() {
-        return data;
-        }
+    public T getData() { return data; }
 
+    public void setData(T value) { data = value; }
+    
     public Ring<T> getNext() {
         return next;
         }
