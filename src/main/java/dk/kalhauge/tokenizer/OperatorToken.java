@@ -87,5 +87,10 @@ public class OperatorToken extends Token {
   public boolean isLanguage() {
     return true;
     }
+
+  @Override
+  public boolean isSpecifier() {
+    return is("@", ".");
+    }
   
   }

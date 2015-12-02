@@ -1,0 +1,3 @@
+Person[] children;
+adult Person[2]parent children;
+

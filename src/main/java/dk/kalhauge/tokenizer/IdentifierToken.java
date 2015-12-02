@@ -11,7 +11,8 @@ public class IdentifierToken extends Token implements Comparable<IdentifierToken
   private static Set<String> keywords = null;
 
   private static final String[] identifierKeywords = {
-    "class", "state", "when", "if", "else", "while", "do", "for", "as", "is"
+    "class", "state", "when", "if", "else", "while", "do", "for", "as", "is",
+    "return", "extends", "implements", "throw", "throws"
     };
 
   public static boolean understands(Source input) throws IOException {
@@ -79,5 +80,11 @@ public class IdentifierToken extends Token implements Comparable<IdentifierToken
       }
     return keywords.contains(value);
     }
+
+  @Override
+  public boolean isSpecifier() {
+    return !isLanguage();
+    }
+  
   
   }

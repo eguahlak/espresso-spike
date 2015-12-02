@@ -70,6 +70,8 @@ public abstract class Token {
     
   public abstract boolean isLanguage();
   
+  public boolean isSpecifier() { return false; }
+  
   static Token read(Source source) throws IOException {
     if (excludeWhitespace) WhitespaceToken.trim(source);
     else if (WhitespaceToken.understands(source)) return new WhitespaceToken(source);

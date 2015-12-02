@@ -18,4 +18,5 @@ public interface Grinder {
     return ring.getData().getToken();
     }
   
+  
   }

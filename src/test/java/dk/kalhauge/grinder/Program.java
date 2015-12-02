@@ -11,6 +11,7 @@ public class Program {
   
   public static void main(String[] args) {
     try {
+//      String path = dk.kalhauge.tokenizer.Program.class.getResource("SimpleIndex.espresso").getPath();
       String path = dk.kalhauge.tokenizer.Program.class.getResource("Person.espresso").getPath();
       System.out.println(">>"+path+"<<");
       Source source = new Source(new FileInputStream(path));
@@ -21,11 +22,13 @@ public class Program {
       
       
       System.out.println("====");
-      work.process(new DyadicSequenceGrinder("[]"));
+      work.process(new IndexGrinder());
       Printer.print(work);
-      
-      System.out.println("====");
+      System.out.println("----");
       work.process(new DyadicOperatorGrinder(".", "@"));
+      Printer.print(work);
+      System.out.println("----");
+      work.process(new SentenceGrinder());
       Printer.print(work);
       
       System.out.println("====");

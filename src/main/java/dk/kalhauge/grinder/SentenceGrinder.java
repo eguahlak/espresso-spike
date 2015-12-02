@@ -1,26 +1,21 @@
 package dk.kalhauge.grinder;
 
-import dk.kalhauge.tokenizer.IdentifierToken;
-import dk.kalhauge.tokenizer.SentenceToken;
+import dk.kalhauge.tokenizer.SpecialToken;
 import dk.kalhauge.tokenizer.Token;
 import dk.kalhauge.util.Ring;
+import static dk.kalhauge.grinder.Grinder.*;
 
 public class SentenceGrinder implements Grinder {
 
   @Override
   public void grind(Ring<Branch> ring) {
-    Token token = ring.getData().getToken();
-    if (!token.is(IdentifierToken.class) || token.isLanguage()) return;
-
-    Ring<Branch> left = ring.getPrevious();
-    Token leftToken = left.getData().getToken();
-    if (leftToken.is(SentenceToken.class)) {
-      left.getData().add(left.getNext().detach());
-      }
-    else {
-      if (!leftToken.is(IdentifierToken.class) || leftToken.isLanguage()) return;
-      ring.setData(new Tree(new SentenceToken(), left.detach(), ring.getData()));
-      }
+    Token current = current(ring);
+    if (!current.isSpecifier()) return;
+    Token previous = previous(ring);
+    if (!previous.isSpecifier()) return;
+    System.out.println("Sentence grinding "+previous+" § "+current);
+    Branch left = ring.getPrevious().detach();
+    ring.setData(new Tree(SpecialToken.SENTENCE, left, ring.getData()));
     }
   
   }
