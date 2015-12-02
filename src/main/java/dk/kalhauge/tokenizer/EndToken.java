@@ -47,6 +47,11 @@ public class EndToken extends Token {
     }
 
   @Override
+  public String getType() {
+    return "End";
+    }
+
+  @Override
   public boolean isLanguage() {
     return true;
     }

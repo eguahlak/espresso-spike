@@ -79,6 +79,11 @@ public class OperatorToken extends Token {
     }
 
   @Override
+  public String getType() {
+    return "Operator";
+    }
+
+  @Override
   public boolean isLanguage() {
     return true;
     }

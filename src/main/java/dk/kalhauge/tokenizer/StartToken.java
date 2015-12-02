@@ -38,6 +38,7 @@ public class StartToken extends Token {
   @Override
   public <T extends Token> boolean is(Class<T> type, String... values) {
     return type == StartToken.class && (values.length == 0 || in(getPattern(), values));
+//    return type == StartToken.class && (values.length == 0 || in(getStart(), values));
     }
   
   public String getStart() { return ""+(char)start; }
@@ -52,6 +53,11 @@ public class StartToken extends Token {
   @Override
   public String getText() {
     return String.valueOf((char)start);
+    }
+
+  @Override
+  public String getType() {
+    return "Start";
     }
 
   @Override

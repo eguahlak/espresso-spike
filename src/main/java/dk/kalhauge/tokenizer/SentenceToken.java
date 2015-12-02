@@ -8,6 +8,11 @@ public class SentenceToken extends Token {
     }
 
   @Override
+  public String getType() {
+    return "Sentence";
+    }
+
+  @Override
   public <T extends Token> boolean is(Class<T> type, String... values) {
     return type == SentenceToken.class && in("§", values);
     }

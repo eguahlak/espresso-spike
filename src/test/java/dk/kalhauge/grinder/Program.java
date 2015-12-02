@@ -4,7 +4,6 @@ import dk.kalhauge.source.Source;
 import dk.kalhauge.tokenizer.Token;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,21 +16,25 @@ public class Program {
       Source source = new Source(new FileInputStream(path));
       Work work = new Work(Token.iterate(source));
 
-      System.out.println("!!!!");
       Printer.print(work);
-//      Grinder printGrinder = new PrintGrinder();
-//      work.process(printGrinder);
+//      work.process(new PrintGrinder());
+      
+      
       System.out.println("====");
-      work.process(new DyadicOperationGrinder(".", "@"));
+      work.process(new DyadicSequenceGrinder("[]"));
+      Printer.print(work);
+      
+      System.out.println("====");
+      work.process(new DyadicOperatorGrinder(".", "@"));
       Printer.print(work);
       
       System.out.println("====");
       System.out.println("monadic -");
-      work.process(new MonadicOperationGrinder("-"));
+      work.process(new MonadicOperatorGrinder("-"));
       System.out.println("dyadic * /");
-      work.process(new DyadicOperationGrinder("*", "/"));
+      work.process(new DyadicOperatorGrinder("*", "/"));
       System.out.println("dyadic + -");
-      work.process(new DyadicOperationGrinder("+", "-"));
+      work.process(new DyadicOperatorGrinder("+", "-"));
       Printer.print(work);
 
 //      System.out.println("====");

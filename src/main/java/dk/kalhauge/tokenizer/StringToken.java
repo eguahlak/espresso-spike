@@ -49,6 +49,11 @@ public class StringToken extends Token {
     }
 
   @Override
+  public String getType() {
+    return "String";
+    }
+
+  @Override
   public boolean isLanguage() {
     return false;
     }

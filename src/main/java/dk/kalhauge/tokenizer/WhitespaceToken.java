@@ -52,6 +52,11 @@ public class WhitespaceToken extends Token {
     }
 
   @Override
+  public String getType() {
+    return "Whitespace";
+    }
+  
+  @Override
   public boolean isLanguage() {
     throw new UnsupportedOperationException("WhitespaceToken.isLanguage(...) is not supported.");
     }

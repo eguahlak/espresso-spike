@@ -3,6 +3,8 @@ class Person {
   String name;
   Integer age;
   married Person@spouse spouse;
+  Person[]@parents children;
+  adult Person[2]@children parents;
 
   Integer calc(positive Integer a, Integer b) {
     Integer c = x * -y;

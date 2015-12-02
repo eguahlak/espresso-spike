@@ -80,6 +80,11 @@ public class NumeralToken extends Token {
     }
 
   @Override
+  public String getType() {
+    return "Numeral";
+    }
+
+  @Override
   public boolean isLanguage() {
     return false;
     }

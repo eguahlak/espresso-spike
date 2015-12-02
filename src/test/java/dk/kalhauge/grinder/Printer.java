@@ -51,7 +51,7 @@ class Printer {
     }
   
   private int printWork(int depth, int indent, Work work) {
-    String text = work.getText();
+    String text = "«"+work.getText()+"»";
     plot(text, indent, depth);
     indent += text.length() + padding;
     for (Branch branch : work.getBranches()) {

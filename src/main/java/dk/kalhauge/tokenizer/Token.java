@@ -27,10 +27,12 @@ public abstract class Token {
 
   @Override
   public String toString() {
-    return (isLanguage() ? "£" : "")+getText()+"["+position+"]";
+    return (isLanguage() ? "£" : "")+getType()+" "+getText()+"["+position+"]";
     }
 
   public abstract String getText();
+  
+  public abstract String getType();
   
   public int getPosition() {
     return position;

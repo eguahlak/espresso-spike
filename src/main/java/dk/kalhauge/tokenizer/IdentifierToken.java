@@ -67,6 +67,11 @@ public class IdentifierToken extends Token implements Comparable<IdentifierToken
     }
 
   @Override
+  public String getType() {
+    return "Identifier";
+    }
+
+  @Override
   public boolean isLanguage() {
     if (keywords == null) {
       keywords = new HashSet<>();
